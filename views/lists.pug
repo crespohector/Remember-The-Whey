@@ -4,12 +4,11 @@ mixin lists()
             button(id="all-tasks-btn") All Tasks
         div(class="block_lists")
             p(id="block_lists--text") My Lists:
-            //- div(id="main-list-container")
             button(id="btn-create-list") +
             div(id="myModal" class='modal')
                 div(class="modal-content")
                     form(class="list-form")
-                        input(id="csurf" type="hidden" name="_csrf")
+                        input(id="csurf" type="hidden" name="_csrf" value=csrfToken)
                         span(class="close") X
                         p(class="add-list") Add a list
                         label(class="list-label" for="list-name") Please enter a new list name:

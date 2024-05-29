@@ -1,5 +1,5 @@
 # Remeber the Whey
-  Remember the Whey is a fitness organizational tool.  It enables a user to categorize and keep track of workouts by creating       customizable lists.  The user is also given the ability to customize each excercise or task on their custom list, while also       having easy access to a summary of the list or task info. 
+  Remember the Whey is a fitness organizational tool.  It enables a user to categorize and keep track of workouts by creating       customizable lists.  The user is also given the ability to customize each excercise or task on their custom list, while also       having easy access to a summary of the list or task info.
 ![loginpage](https://user-images.githubusercontent.com/73197963/114326209-ac204280-9b01-11eb-86bd-1cf474da6e7f.JPG)
 ![homepage](https://user-images.githubusercontent.com/73197963/114340989-c28cc500-9b26-11eb-8136-012a83e08995.JPG)
 
@@ -7,7 +7,7 @@
 ## MVP
   * Ability to create new users and have user login with authorization
   * Ability to login as a demo user with full access to features
-  * Users can create, update, delete a list unique to the user  
+  * Users can create, update, delete a list unique to the user
   * Users can create, update, delete a task to/from their list
   * Users have access to a summary of the list or task (excercise?)
   * Users can search through all excercises or tasks
@@ -16,7 +16,7 @@
   * Autocomplete SmartAdd of task properties
   * Subtasks
   * Tag system
-  
+
 ## TECHNOLOGIES USED
   * Javascript
   * Express
@@ -24,7 +24,7 @@
   * PSQL Database
   * CSS
   * HTML
-  
+
 ## DATABASE SCHEMA
 
 ![dataschema](https://user-images.githubusercontent.com/73197963/114215426-94935f00-9933-11eb-84ec-4680664f90ce.JPG)
@@ -143,7 +143,7 @@ const filterTasks = async (tasks, query) => {
             }
             // Filter by exclude search term
             // Options Obj = { term, includeNotes }
-            
+
             else if (prop === 'exclude') {
                 let { term, includeNotes } = query[prop];
                 if (term !== null) {
@@ -243,7 +243,7 @@ Simple, clean, and modern styling features such as subtle color changes, hover e
   * created_at (dateTime, not null)
   * updated_at (dateTime, not null)
 
-## BACKEND ROUTES    
+## BACKEND ROUTES
   ### USERS
    * log-in user (GET & POST)
    * sign-up user (GET & POST)
@@ -262,10 +262,32 @@ Simple, clean, and modern styling features such as subtle color changes, hover e
    * update task properties (PATCH)
    * delete task (DELETE)
 
-## ENVIORNMENT DEPENDENCIES/INSTALLATION
+## ENVIRONMENT DEPENDENCIES/INSTALLATION
    * Bcryptjs
    * Cookie parser
    * Csurf
    * Express validators
    * Heroku
 
+## How to install locally
+
+### Requirements needed to be downloaded
+
+- Node.js
+- PostgreSQL *(optional)*
+
+1. Create a .env file with the environment variables. Reference the '.env.example' file.
+
+2. run ```npm install```
+
+>*(You can skip steps 3-5 if you plan not to use PostgreSQL locally)*
+
+3. Ensure that the db_user and db_database in PostgreSQL before migrating.
+
+4. migrate the models: ```npx dotenv sequelize db:migrate```
+
+5. migrate the seed data: ```npx dotenv sequelize db:seed:all```
+
+6. run ```npm start``` to start the Express server.
+
+7. Visit the URL of the localhost and enjoy!

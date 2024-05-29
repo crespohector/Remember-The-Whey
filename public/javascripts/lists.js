@@ -146,8 +146,9 @@ async function createList(name) {
         name,
         _csrf: formData.get('_csrf'),
     }
+
     try {
-        const res = await fetch('/lists', {
+        const res = await fetch('/lists/ ', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

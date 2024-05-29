@@ -8,6 +8,7 @@ const {asyncHandler,} = require('./utils');
 const {check, validationResult} = require('express-validator');
 const csrfProtection = csrf({cookie: true})
 
+const { requireAuth } = require('./auth');
 
 //get all lists from user
 router.get('/', csrfProtection, asyncHandler(async(req,res) => {
@@ -48,7 +49,7 @@ const listValidators = [
 
 
 //create a new list feature
-router.post('/', csrfProtection, listValidators, asyncHandler(async(req,res) => {
+router.post('/', requireAuth, csrfProtection, listValidators, asyncHandler(async(req,res) => {
     const {name} = req.body;
 
     const list = db.List.build({
