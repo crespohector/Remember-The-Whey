@@ -314,7 +314,6 @@ window.addEventListener('DOMContentLoaded', async (event) => {
     rootDiv.addEventListener('click', async (e) => {
         e.preventDefault()
         let btn = e.target
-        // console.log("event.target btn: ", btn.classList)
 
         //Listen for a click on the list div element to display tasks
         if (btn.classList.contains("list__div-container")) {
@@ -325,10 +324,9 @@ window.addEventListener('DOMContentLoaded', async (event) => {
 
             await updateTasksSection(selectedListId, selectedQuery, true);
         }
-        //List for a click when the anchor element is clicked
+        //Listen for a click when the anchor element is clicked
         if (btn.classList.contains('list-anchors')) {
             e.preventDefault();
-            // console.log(e.target.id);
             selectedListId = e.target.id;
             selectedTaskIds = new Set();
             selectedQuery = { complete: selectedQuery.complete }

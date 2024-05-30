@@ -59,7 +59,6 @@ searchInp.addEventListener('keypress', async (e) => {
         if (!searchIncTerm) {
             return;
         }
-        console.log(searchIncTerm)
 
         try {
             let tasks = await getTasks();

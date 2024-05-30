@@ -4,7 +4,7 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const { loginUser, logoutUser } = require('./auth');
 
-const { User } = require('../db/models');
+const { User, List } = require('../db/models');
 const { asyncHandler, csrfProtection } = require('./utils');
 
 // had to npm install csurf, express-validator, bcryptjs
@@ -133,7 +133,18 @@ router.post('/sign-up', csrfProtection, userValidators, asyncHandler(async (req,
     const hashedPW = await bcrypt.hash(password, 10);  // created hashed pw to store in DB
 
     user.hashPW = hashedPW;
-    await user.save()
+    await user.save();
+
+    // create a _hidden List instance for the new user
+    const list = List.build({
+      name: '_hidden',
+      userId: user.id,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    })
+
+    // migrate new _hidden list to the database
+    await list.save();
 
     loginUser(req, res, user);  // logs in user after successful sign-up
     res.redirect('/');

@@ -38,13 +38,14 @@ let selectedOrder = {               // Holds the currently applied order object
 // Helper functions
 
 const getHiddenId = async () => {
-    const res = await fetch('/lists', {
+    const res = await fetch('/lists/', {
         method: 'GET',
         headers: {
             "Content-Type": "application/json"
         }
     });
     const obj = await res.json();
+    console.log('obj: ', obj)
     for (let list of obj['lists']) {
         if (list['name'] === '_hidden')
             return `${list['id']}`;
@@ -254,7 +255,6 @@ const displayTasks = async (tasks, keepSelected = false) => {
     if (!keepSelected)
         selectedTaskIds = new Set();
 
-    // console.log(selectedListId, selectedQuery, keepSelected)
 
     // Sort tasks before display
     sortTasks(tasks, selectedOrder);
@@ -454,7 +454,6 @@ const toolbarSelectorHandler = async (ev) => {
                 else if (ev.target.id === 'selector_overdue') {
                     let dateToday = dates['date_today'][0];
                     dateToday = getDateString(dateToday);
-                    console.log(dateToday)
 
                     let tasks = await getTasks(selectedListId);
                     tasks = await filterTasks(tasks, {
@@ -506,7 +505,6 @@ const fetchHelper = async (method, body = {}) => {
                 body['_csrf'] = formData.get('_csrf');
                 initObj['body'] = JSON.stringify(body);
             }
-
             const res = await fetch(`/tasks/${id}`, initObj);
             if (!res.ok) {
                 console.log('RES NOT OKAY')
@@ -540,7 +538,6 @@ const toolbarCompleteHandler = async (ev) => {
                 compCount++
             }
         }
-        // console.log('tasks:', tasks)
         let taskNum = document.querySelector('.tasks__container-number')
         let completedNum = document.querySelector('.completed__container-number')
         completedNum.innerText = compCount
@@ -561,7 +558,6 @@ const toolbarUncompleteHandler = async (ev) => {
                 compCount++
             }
         }
-        // console.log('tasks:', tasks)
         let taskNum = document.querySelector('.tasks__container-number')
         let completedNum = document.querySelector('.completed__container-number')
         completedNum.innerText = compCount
@@ -609,7 +605,6 @@ const toolbarDuplicateHandler = async (ev) => {
     }
     const pageLoadTaskUpdate = (async () => {
         let tasks = await getTasks();
-        // console.log('tasks:', tasks)
         let taskNum = document.querySelector('.tasks__container-number')
         taskNum.innerText = tasks.length
     })()
@@ -620,7 +615,6 @@ const toolbarDeleteHandler = async (ev) => {
     selectedTaskIds = new Set();
     const pageLoadTaskUpdate = (async () => {
         let tasks = await getTasks();
-        // console.log('tasks:', tasks)
         let taskNum = document.querySelector('.tasks__container-number')
         taskNum.innerText = tasks.length
     })()
@@ -739,7 +733,7 @@ const taskFormSubmitHandler = async (ev) => {
     };
 
     try {
-        const res = await fetch('/tasks', {
+        const res = await fetch('/tasks/', {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
@@ -905,8 +899,6 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const task = await (await fetch(`/tasks/${Array.from(selectedTaskIds)[0]}`)).json()
             const list = await (await fetch(`/lists/${task.listId}`)).json()
-            // console.log('task:', task)
-            // console.log("list:", list)
             // if (!tasks) tasks = await getTasks();
             taskInput.value = task.name
             listInput.value = list.list.name
@@ -919,7 +911,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    document.body.addEventListener('click', summaryDisplayTasks)
+    // document.body.addEventListener('click', summaryDisplayTasks)
 
     //create a tooltip display for this as well!
     //!TASKS  -E
@@ -1038,6 +1030,8 @@ updateTasksSection(selectedListId, selectedQuery, true);
 (async () => {
     _hiddenId = await getHiddenId();
     selectedListId = _hiddenId;
+
+    console.log('hidden ID: ', _hiddenId)
 })();
 
 
@@ -1049,7 +1043,6 @@ updateTasksSection(selectedListId, selectedQuery, true);
             compCount++
         }
     }
-    // console.log('tasks:', tasks)
     let taskNum = document.querySelector('.tasks__container-number')
     let completedNum = document.querySelector('.completed__container-number')
     completedNum.innerText = compCount
