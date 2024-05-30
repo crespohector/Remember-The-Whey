@@ -13,7 +13,8 @@ mixin lists()
                         p(class="add-list") Add a list
                         label(class="list-label" for="list-name") Please enter a new list name:
                         br
-                        input(type="text" name="name" class="list-name--input" required)
+                        input(type="text" name="name" class="list-name--input" value=""
+                        required minlength="1" maxlength="75" placeholder="enter list name here...")
                         br
                         input(type="submit" value="Add" class="list-add")
                         input(type="button" value="Cancel" class="list-cancel")

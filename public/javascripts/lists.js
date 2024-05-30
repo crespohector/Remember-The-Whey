@@ -90,7 +90,8 @@ async function fetchLists() {
                                                     <p class="add-list-rename">Rename List</p>
                                                     <label class="list-label-rename"> List name </label>
                                                     <br>
-                                                    <input type="text" name="name" class="list-name-rename--input-${list.id}" required>
+                                                    <input type="text" name="name" class="list-name-rename--input-${list.id}" value=""
+                                                    required minlength="1" maxlength="75" placeholder="enter list name here...">
                                                     <br>
                                                     <input type="submit" value="Save" class="list-rename ${list.id}">
                                                     <input type="button" value="Cancel" id="cancel-${list.id}" class="list-cancel-rename">
@@ -134,13 +135,23 @@ async function fetchOneList(id) {
 //---------------------------------------------------------------------
 
 //Create a new list
-async function createList(name) {
+async function createList(event) {
 
     const divLists = document.querySelector('#lists');
 
     const newListForm = document.querySelector('.list-form');
 
     const formData = new FormData(newListForm);
+
+    //exit function if name is empty or over 75 chars
+    if (!newListForm.checkValidity()) {
+        return ;
+    }
+
+    //prevent browswer reload behavior
+    event.preventDefault();
+
+    const name = formData.get('name');
 
     const body = {
         name,
@@ -163,6 +174,8 @@ async function createList(name) {
         divLists.innerHTML = "";
         //Fetch all the lists again with the updated version
         await fetchLists();
+        //close modal
+        modal.style.display = "none";
     }
     catch (err) {
         console.log(err)
@@ -284,9 +297,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
 
     //listen for a click on the add btn to create a new list
     inputAddListBtn.addEventListener('click', async (event) => {
-        event.preventDefault();
-        await createList(inputListValue.value);
-        modal.style.display = "none";
+        await createList(event);
         inputListValue.value = "";
     });
 
@@ -347,8 +358,6 @@ window.addEventListener('DOMContentLoaded', async (event) => {
         if (btn.classList.contains("list-rename")) {
 
             let inputVal = document.querySelector(`.list-name-rename--input-${modalId}`);
-            // console.log("id:", modalId);
-            // console.log(inputVal.value);
 
             await updateList(modalId, inputVal.value);
 
