@@ -45,7 +45,6 @@ const getHiddenId = async () => {
         }
     });
     const obj = await res.json();
-    console.log('obj: ', obj)
     for (let list of obj['lists']) {
         if (list['name'] === '_hidden')
             return `${list['id']}`;
@@ -315,10 +314,10 @@ const displayTasks = async (tasks, keepSelected = false) => {
     });
 
     // Insert some empty task divs
-    let emptiesHTML = '';
-    for (let i = 0; i < 30; i++)
-        emptiesHTML += `<div class="tasks-section__task-empty"></div>`;
-    tasksEmpties.innerHTML = emptiesHTML;
+    // let emptiesHTML = '';
+    // for (let i = 0; i < 10; i++)
+    //     emptiesHTML += `<div class="tasks-section__task-empty"></div>`;
+    // tasksEmpties.innerHTML = emptiesHTML;
 
     tasksContainer.innerHTML = tasksHtml.join('');
 
@@ -1027,13 +1026,12 @@ window.addEventListener('click', closeDropdowns);
 
 updateTasksSection(selectedListId, selectedQuery, true);
 
+// reassign selectedListID to equal to the _hidden list id on initial load.
+    // If a user creates a new task on initial load, it will belong to the _hidden list.
 (async () => {
     _hiddenId = await getHiddenId();
     selectedListId = _hiddenId;
-
-    console.log('hidden ID: ', _hiddenId)
 })();
-
 
 (async () => {
     let tasks = await getTasks();

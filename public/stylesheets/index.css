@@ -41,20 +41,17 @@ body {
 
 .task__column {
     overflow-x: hidden;
+    overflow-y: auto;
     margin-top: 5px;
     grid-area: tasks;
     display: flex;
     background-color: white;
     min-width: 200px;
-    /* min-height: 100%; */
-    /* width: 870px; */
     height: 100%;
-    /* height: 100%; */
     padding: 25px 0;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     z-index: 1;
-    overflow: hidden;
 }
 
 .summary__column {
