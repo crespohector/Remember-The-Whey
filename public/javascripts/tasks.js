@@ -275,10 +275,10 @@ const displayTasks = async (tasks, keepSelected = false) => {
         if (task.date) {
             let currDate = Date.parse(task.date);
             let todayDate = Date.parse(getDateString(dates['date_today'][0]));
-            if (currDate === todayDate){
+            if (currDate === todayDate) {
                 dateStr = '<div style="color:#0060bf;">Today</div>';
             }
-            else if (currDate === Date.parse(getDateString(dates['date_tomorrow'][0]))){
+            else if (currDate === Date.parse(getDateString(dates['date_tomorrow'][0]))) {
                 dateStr = '<div style="color:#6e6e6e;">Tomorrow</div>';
             }
 
@@ -296,13 +296,13 @@ const displayTasks = async (tasks, keepSelected = false) => {
             noteVisibile = 'active';
 
         return `<div id=task-${task.id} class="tasks-section__task">
-                    <div>
-                        <div class="handle">
+                    <div class="individual-task">
+                        <div class="handle individual-task">
                             <i class="fas fa-ellipsis-v"></i>
                         </div>
-                        <div class='divider'></div>
-                        <input type="checkbox">
-                        <div>${taskStr}</div>
+                        <div class='divider individual-task'></div>
+                        <input class="individual-task" type="checkbox">
+                        <div class="individual-task">${taskStr}</div>
                     </div>
                     <div>
                         ${dateStr}
@@ -746,6 +746,10 @@ const taskFormSubmitHandler = async (ev) => {
         else {
             clearTaskFields();
             updateTasksSection(selectedListId, selectedQuery, true);
+            // update task count here
+            const tasks = await getTasks();
+            let taskNumber = document.querySelector('.tasks__container-number')
+            taskNumber.innerHTML = tasks.length;
         }
     }
     catch (err) {
@@ -834,8 +838,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // let overdueNum = document.querySelector('.overdue__container-number')
     // let completedNum = document.querySelector('.completed__container-number')
 
-
-
     let taskTooltip = document.querySelector('.info__tooltip')
     let taskInput = document.querySelector('.update__task')
     let listInput = document.querySelector('.update__list')
@@ -851,7 +853,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let durationInputForm = document.querySelector('.form__update-duration')
     let notesInputForm = document.querySelector('.form__update-notes')
     //!.summary SLIDEOUT ELEMENTS
-
 
     //!HELPERS
     //FETCH
@@ -896,8 +897,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const summaryDisplayTasks = async () => {
         try {
-            const task = await (await fetch(`/tasks/${Array.from(selectedTaskIds)[0]}`)).json()
-            const list = await (await fetch(`/lists/${task.listId}`)).json()
+            const task = await (await fetch(`/tasks/${Array.from(selectedTaskIds)[0]}`)).json();
+            const list = await (await fetch(`/lists/${task.listId}`)).json();
             // if (!tasks) tasks = await getTasks();
             taskInput.value = task.name
             listInput.value = list.list.name
@@ -910,7 +911,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // document.body.addEventListener('click', summaryDisplayTasks)
+    // search for task summary when task component is clicked.
+    document.body.addEventListener('click', (e) => {
+        const taskEl = e.target;
+        if (taskEl.classList.contains("tasks-section__task") || taskEl.classList.contains("individual-task")) {
+            summaryDisplayTasks();
+        }
+    })
 
     //create a tooltip display for this as well!
     //!TASKS  -E
@@ -1027,7 +1034,7 @@ window.addEventListener('click', closeDropdowns);
 updateTasksSection(selectedListId, selectedQuery, true);
 
 // reassign selectedListID to equal to the _hidden list id on initial load.
-    // If a user creates a new task on initial load, it will belong to the _hidden list.
+// If a user creates a new task on initial load, it will belong to the _hidden list.
 (async () => {
     _hiddenId = await getHiddenId();
     selectedListId = _hiddenId;

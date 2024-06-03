@@ -3,6 +3,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     box-sizing: border-box;
+    min-height: 100vh;
 }
 
 #main__left{
@@ -34,7 +35,6 @@ body {
 
 #main__form {
     box-sizing: border-box;
-    height: 800px;
     grid-row-start: 2;
     display: flex;
     align-items: center;
@@ -200,24 +200,19 @@ footer {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin: 0px 0px 5px;
 }
 
-
-.footer__links_container{
-    display: flex;
-    justify-content: space-evenly;
-    margin-left: 12px;
-    font-size: 14px;
-    font-weight: 700;
-    height: 80px;
-    align-items: flex-end;
-}
 
 .footer__link {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     text-decoration: none;
     border-right: 2px solid rgb(0, 0, 0, .1);
     padding-right: 10px;
     margin: 0px 5px;
+}
+
+.footer__link:last-child {
+    border-right: none;
 }

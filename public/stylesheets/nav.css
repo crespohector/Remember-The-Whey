@@ -80,20 +80,30 @@
 }
 
 #hamburger__icon {
-    padding-left: 15px;
-    color: rgba(255,255,255,.7)
-    
+    margin-left: 15px;
+    color: #fff;
+    font-size: 1.4rem;
+    transition: color 0.25s ease-in;
+}
+
+#hamburger__icon:hover {
+    color: rgb(226, 236, 236);
 }
 
 .hide {
     z-index: 0;
+    transition: z-index 0.2s ease 0s;
 }
 
 .column__container--expand {
     grid-template-columns: 0px 1fr 1fr;
+}
+
+/* .column__container--regular {
+    grid-template-columns: 1px 1fr 1fr;
     transition-property: grid-template-columns;
     transition-duration: 2s;
-}
+} */
 
 /* .task__column--big {
     margin-left: 0px;

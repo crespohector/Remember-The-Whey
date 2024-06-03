@@ -79,6 +79,7 @@ searchInp.addEventListener('keypress', async (e) => {
                 selectedListId = _hiddenId;
 
                 await displayTasks(tasks, true);
+                navSearch.value = "";
             }
         } catch (err) {
             console.log(err)
@@ -93,7 +94,7 @@ const searchNotesInp = document.querySelector('.extSearch__form--notes')
 
 btnExtSubmit.addEventListener('click', async (e) => {
     e.preventDefault()
-    const searchIncTerm = searchIncInp.value || null;
+    const searchIncTerm = searchIncInp.value || navSearch.value;
     const searchExcTerm = searchExcInp.value || null;
     const includeNotes = searchNotesInp.checked;
 
@@ -110,12 +111,14 @@ btnExtSubmit.addEventListener('click', async (e) => {
                 includeNotes
             }
         }
+
         tasks = await filterTasks(tasks, tmpQuery);
 
         if (tasks.length === 0) {
             alert("No tasks matched your search");
             searchExcInp.value = '';
             searchIncInp.value = '';
+            navSearch.value = "";
         } else {
             tmpQuery['complete'] = selectedQuery['complete'];
             selectedQuery = tmpQuery;
@@ -125,6 +128,7 @@ btnExtSubmit.addEventListener('click', async (e) => {
 
             searchExcInp.value = '';
             searchIncInp.value = '';
+            navSearch.value = "";
             searchNotesInp.checked = false;
             extendSearchDiv.classList.remove(`search_bar-extend--show`)
             extendSearchDiv.classList.add(`search_bar-extend--hide`)

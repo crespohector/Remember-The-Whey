@@ -18,10 +18,11 @@ body {
 .column__container {
     display: grid;
     grid-template-columns: 200px 1fr 1fr;
-    /* display: flex; */
     grid-template-areas: "lists tasks summary";
     height: 94vh;
     overflow: hidden;
+
+    transition: grid-template-columns 1.5s ease;
 }
 
 .list__column {
@@ -30,19 +31,17 @@ body {
     flex-direction: column;
     background-color: #d7e7f5;
     min-width: 200px;
-    /* max-width: 300px; */
-    /* min-height: 500px; */
     height: 100%;
     padding: 25px;
     border-radius: 3px;
-    margin-top: 5px;
+
     z-index: 3;
+    transition: z-index 2s ease 1s;
 }
 
 .task__column {
     overflow-x: hidden;
     overflow-y: auto;
-    margin-top: 5px;
     grid-area: tasks;
     display: flex;
     background-color: white;
@@ -51,17 +50,15 @@ body {
     padding: 25px 0;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+
     z-index: 1;
 }
 
 .summary__column {
-    margin-top: 5px;
     grid-area: summary;
     display: flex;
     background-color: #e4eef8;
     min-width: 200px;
-    /* min-height: 500px; */
-    /* width: 850px; */
     height: 100%;
     padding: 25px;
     border-radius: 6px;
