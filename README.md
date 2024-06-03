@@ -274,13 +274,11 @@ Simple, clean, and modern styling features such as subtle color changes, hover e
 ### Requirements needed to be downloaded
 
 - Node.js
-- PostgreSQL *(optional)*
+- PostgreSQL
 
 1. Create a .env file with the environment variables. Reference the '.env.example' file.
 
 2. run ```npm install```
-
->*(You can skip steps 3-5 if you plan not to use PostgreSQL locally)*
 
 3. Ensure that the db_user and db_database in PostgreSQL before migrating.
 
