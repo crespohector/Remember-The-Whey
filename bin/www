@@ -1,7 +1,16 @@
-#!/usr/bin/env node
 
-const port = process.env.PORT || '8080';
+require('dotenv').config();
 
+const {port} = require('../config');
 const app = require('../app');
+const db = require("../db/models");
 
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+db.sequelize
+    .authenticate()
+    .then(() => {
+        app.listen(port, () => console.log(`listening on port ${port}`));
+    })
+    .catch((err) => {
+        console.log('database connection failed');
+        console.log(err);
+    })
