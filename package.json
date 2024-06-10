@@ -7,7 +7,8 @@
     "sequelize-cli": "sequelize-cli",
     "start": "per-env",
     "start:development": "nodemon ./bin/www",
-    "start:production": "node ./bin/www"
+    "start:production": "node ./bin/www",
+    "build": "npm install && node psql-setup-script.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
